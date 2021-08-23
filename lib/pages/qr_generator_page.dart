@@ -11,6 +11,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share/share.dart';
 
+//test 1
 class QRGenerator extends StatefulWidget {
   const QRGenerator({Key? key}) : super(key: key);
 
@@ -68,7 +69,8 @@ class _QRGeneratorState extends State<QRGenerator> {
                 focusNode: _focuseNode,
                 decoration: InputDecoration(
                   hintText: 'Sample data {"id":123,"name":"John Doe"}',
-                  hintStyle: TextStyle(fontWeight: FontWeight.w400, color: Colors.grey.shade400),
+                  hintStyle: TextStyle(
+                      fontWeight: FontWeight.w400, color: Colors.grey.shade400),
                   labelText: 'Data',
                   labelStyle: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -85,7 +87,9 @@ class _QRGeneratorState extends State<QRGenerator> {
                 },
               ),
               SizedBox(height: 10),
-              Align(alignment: Alignment.centerLeft, child: Text('Embedded Center Image (Optional)')),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('Embedded Center Image (Optional)')),
               Row(
                 children: [
                   Checkbox(
@@ -100,7 +104,9 @@ class _QRGeneratorState extends State<QRGenerator> {
                     child: Text('Insert Image'),
                     onPressed: _includeImage
                         ? () async {
-                            await _picker.pickImage(source: ImageSource.gallery).then((value) {
+                            await _picker
+                                .pickImage(source: ImageSource.gallery)
+                                .then((value) {
                               if (value != null) {
                                 setState(() {
                                   _imagePath = value.path;
@@ -119,7 +125,10 @@ class _QRGeneratorState extends State<QRGenerator> {
                           child: SingleChildScrollView(
                             child: Text(
                               _imagePath,
-                              style: TextStyle(color: _includeImage ? Colors.black : Colors.grey),
+                              style: TextStyle(
+                                  color: _includeImage
+                                      ? Colors.black
+                                      : Colors.grey),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -188,7 +197,8 @@ class _QRGeneratorState extends State<QRGenerator> {
                         ? () async {
                             await generateQR().then((value) {
                               setState(() {
-                                _imageFileName = 'QRCode_${DateTime.now().millisecondsSinceEpoch.toString()}';
+                                _imageFileName =
+                                    'QRCode_${DateTime.now().millisecondsSinceEpoch.toString()}';
                                 qrImage = value;
                                 _qrAvailable = true;
                               });
@@ -204,23 +214,36 @@ class _QRGeneratorState extends State<QRGenerator> {
                     child: Text('Save'),
                     onPressed: _qrAvailable
                         ? () async {
-                            await Permission.storage.request().then((status) async {
-                              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            await Permission.storage
+                                .request()
+                                .then((status) async {
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
                               if (status.isGranted) {
-                                Directory dlDir = Directory('storage/emulated/0/Download');
+                                Directory dlDir =
+                                    Directory('storage/emulated/0/Download');
                                 if (!(await dlDir.exists())) {
                                   dlDir.create();
                                 }
-                                String imagePath = '${dlDir.path}/$_imageFileName.png';
+                                String imagePath =
+                                    '${dlDir.path}/$_imageFileName.png';
                                 if (!(await File(imagePath).exists())) {
-                                  File(imagePath).writeAsBytes(qrImage!).then((value) {
-                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Saved Locally')));
+                                  File(imagePath)
+                                      .writeAsBytes(qrImage!)
+                                      .then((value) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text('Saved Locally')));
                                   });
                                 } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Already Saved')));
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text('Already Saved')));
                                 }
                               } else {
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Storage Permission Not Granted')));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text(
+                                            'Storage Permission Not Granted')));
                               }
                             });
                           }
@@ -231,9 +254,14 @@ class _QRGeneratorState extends State<QRGenerator> {
                     onPressed: _qrAvailable
                         ? () async {
                             Directory docDir = await getTemporaryDirectory();
-                            String imagePath = '${docDir.path}/$_imageFileName.png';
-                            File(imagePath).writeAsBytes(qrImage!).then((value) {
-                              Share.shareFiles(['${value.path}'], text: 'QR Image').then((value) {
+                            String imagePath =
+                                '${docDir.path}/$_imageFileName.png';
+                            File(imagePath)
+                                .writeAsBytes(qrImage!)
+                                .then((value) {
+                              Share.shareFiles(['${value.path}'],
+                                      text: 'QR Image')
+                                  .then((value) {
                                 return null;
                               });
                             });
@@ -283,7 +311,8 @@ class _QRGeneratorState extends State<QRGenerator> {
         ),
       );
 
-      final imageData = await painter.toImageData(720, format: ui.ImageByteFormat.png);
+      final imageData =
+          await painter.toImageData(720, format: ui.ImageByteFormat.png);
       return imageData!.buffer.asUint8List();
     }
     return Future.error('Cannot generate QR Code');
