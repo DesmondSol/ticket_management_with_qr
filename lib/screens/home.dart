@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_generator_reader/pages/qr_generator_page.dart';
 import 'package:qr_generator_reader/pages/qr_scanner_page.dart';
-
+//testing version control
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
