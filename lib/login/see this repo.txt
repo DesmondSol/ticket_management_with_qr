@@ -1,0 +1,3 @@
+check this repo
+https://github.com/TommyRachmadiono/tugas_crud_sqflite
+https://www.youtube.com/watch?v=UpKrhZ0Hppk
