@@ -20,9 +20,24 @@ dependencies:
   permission_handler: ^8.1.4+1
   sqflite:
   path:
+  intl: ^0.17.0
+  fluttertoast: ^8.0.8
 
 # The following section is specific to Flutter.
 flutter:
   uses-material-design: true
   assets:
     - assets/images/
+  fonts:
+    - family: Exo2
+      fonts:
+        - asset: assets/fonts/Exo2-Regular.ttf
+        - asset: assets/fonts/Exo2-ExtraBold.ttf
+        - asset: assets/fonts/Exo2-Thin.ttf
+
+          style: italic
+    - family: AdventPro
+      fonts:
+        - asset: assets/fonts/AdventPro-Bold.ttf
+        - asset: assets/fonts/AdventPro-Regular.ttf
+          #weight: 700
